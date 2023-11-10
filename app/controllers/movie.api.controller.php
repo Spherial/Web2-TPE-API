@@ -71,4 +71,35 @@ require_once './app/models/movie.model.php';
     }
 
 
+    function create($params = []){
+
+        $body = $this->getData();
+
+
+
+        $titulo = $body->titulo;
+        $sinopsis = $body->sinopsis;
+        $director = $body->director;
+        $fecha = $body->año_lanzamiento;
+        $cast = $body->cast;
+        $plataforma = $body->plataforma_id;
+        $link_portada = $body->link_portada;
+
+
+        //Corregir esto
+        if (empty($titulo) || empty($sinopsis) || empty($director) || empty($fecha)
+        || empty($cast) || empty($plataforma) || empty($link_portada)) {
+            $this->view->response("Complete los datos", 400);
+        } else {
+            $id = $this->model->POSTmovie($titulo,$sinopsis,$director,$fecha,$cast,$plataforma,$link_portada);
+
+            // Devuelvo la pelicula creada
+            $tarea = $this->model->getMovieById($id);
+            $this->view->response($tarea, 201);
+        }
+
+
+    }
+
+
  }
