@@ -1,5 +1,7 @@
 <?php
 
+require_once './app/controllers/movie.api.controller.php';
+
 class Route {
     private $url;
     private $verb;
