@@ -42,8 +42,8 @@ require_once './app/models/movie.model.php';
             $movies = $this->model->getAllMovies();
             $this->view->response($movies, 200);
         } else {
-            $movie = $this->model->getMovieById($params[':ID']);  //Sino, traigo solo la tarea cuyo ID solicitaron
-            if(!empty($movie)) { //Si dicha tarea existe
+            $movie = $this->model->getMovieById($params[':ID']);  //Sino, traigo solo la pelicula cuyo ID solicitaron
+            if(!empty($movie)) { //Si dicha pelicula existe
                 if(isset($params[':subrecurso'])) {                //Pregunto si quiere obtener un dato en particular
                     switch ($params[':subrecurso']) {
                         case 'titulo':
@@ -138,5 +138,19 @@ require_once './app/models/movie.model.php';
 
     }
 
+
+
+    function delete ($params = []){
+        $id = $params[':ID'];
+        $pelicula = $this->model->getMovieById($id);
+
+            if($pelicula) {
+                $this->model->DELETEmovie($id);
+                $this->view->response('La pelicula con id='.$id.' ha sido borrada.', 200);
+            } else {
+                $this->view->response('La pelicula con id='.$id.' no existe.', 404);
+            }
+
+    }
 
  }

@@ -18,7 +18,7 @@
     
     $router->addRoute('peliculas/:ID', 'PUT',    'MovieApiController', 'update');
     
-    $router->addRoute('peliculas/:ID', 'DELETE', 'MovieApiController', 'metodoAUsar');
+    $router->addRoute('peliculas/:ID', 'DELETE', 'MovieApiController', 'delete');
     
     $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken'   ); # UserApiController->getToken()
     $router->addRoute('peliculas/:ID/:subrecurso', 'GET',    'MovieApiController', 'getSubRecurso'   );
