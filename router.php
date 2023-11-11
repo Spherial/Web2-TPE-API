@@ -13,7 +13,9 @@
     $router->addRoute('peliculas',     'GET',    'MovieApiController', 'get'   ); # ControllerDePeliculas->get($params)
 
     $router->addRoute('peliculas/:ID', 'GET',    'MovieApiController', 'get'   );
-
+    
+    $router->addRoute('peliculas/:ID/:subrecurso', 'GET',    'MovieApiController', 'getSubRecurso'   );
+    
     $router->addRoute('peliculas',     'POST',   'MovieApiController', 'create');
     
     $router->addRoute('peliculas/:ID', 'PUT',    'MovieApiController', 'update');
@@ -21,6 +23,5 @@
     $router->addRoute('peliculas/:ID', 'DELETE', 'MovieApiController', 'delete');
     
     $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken'   ); # UserApiController->getToken()
-    $router->addRoute('peliculas/:ID/:subrecurso', 'GET',    'MovieApiController', 'getSubRecurso'   );
     #               del htaccess resource=(), verbo con el que llamo GET/POST/PUT/etc
     $router->route($_GET['resource']        , $_SERVER['REQUEST_METHOD']);

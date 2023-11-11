@@ -73,9 +73,11 @@ require_once './app/models/movie.model.php';
 
     function create($params = []){
 
-        $body = $this->getData();
+        $body = $this->getData();  //Obtengo la pelicula a crear (El RAW transformado a Json)
 
 
+
+        //Obtengo sus atributos
 
         $titulo = $body->titulo;
         $sinopsis = $body->sinopsis;
@@ -101,9 +103,12 @@ require_once './app/models/movie.model.php';
 
     }
 
+
+
+    //Actualiza los datos de una pelicula (En el body recibe el JSON actualizado y cambia al original)
     public function update ($params = []){
         $id = $params[':ID'];
-        $pelicula = $this->model->getMovieById($id);
+        $pelicula = $this->model->getMovieById($id); //Obtengo la pelicula a editar
 
 
         //Compruebo que la pelicula que estoy queriendo editar exista
@@ -140,6 +145,10 @@ require_once './app/models/movie.model.php';
 
 
 
+
+
+
+    //Borra una pelicula dada una ID
     function delete ($params = []){
         $id = $params[':ID'];
         $pelicula = $this->model->getMovieById($id);
