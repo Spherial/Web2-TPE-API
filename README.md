@@ -18,7 +18,7 @@ Esta api permite obtener información de las peliculas y series almacenadas en l
 También brinda la opcion de agregar nuevas peliculas, eliminar las ya existentes y crear nuevas.
 
 
-
+---------------------------------------------------------------
 
 ENDPOINTS
 
@@ -122,7 +122,7 @@ de manera descendente.
 
 
 
-
+---------------------------------------------------------------
 
 /api/peliculas  [POST]
 
@@ -149,9 +149,10 @@ Como medida de autenticacion, se debe proporcionar un token bearer, caso contrar
 Devuelve la pelicula creada.
 
 
+---------------------------------------------------------------
 
-
-
+/api/peliculas/:ID
+Comandos permitidos -GET -PUT - DELETE
 
 /api/peliculas/:ID [GET]
 
@@ -167,6 +168,7 @@ Devuelve la pelicula cuyo ID es 15.
 Este endpoint siempre devuelve un unico objeto Json.
 
 
+---------------------------------------------------------------
 
 /api/peliculas/:ID/:subrecurso [GET]
 
@@ -181,7 +183,7 @@ Devuelve un String cuyo contenido es la sinopsis de la pelicula con id = 15.
 
 
 
-
+---------------------------------------------------------------
 
 
 /api/peliculas/:ID [PUT]
@@ -206,7 +208,7 @@ Devuelve la id de la pelicula que ha sido editada.
 
 
 
-
+---------------------------------------------------------------
 
 /api/peliculas/:ID [DELETE]
 
@@ -228,7 +230,7 @@ Devuelve la id de la pelicula que ha sido eliminada.
 
 
 
-
+---------------------------------------------------------------
 
 /api/user/token [GET]
 
