@@ -2,12 +2,15 @@
 
 require_once './app/controllers/api.controller.php';
 require_once './app/models/movie.model.php';
+require_once './app/helpers/auth.api.helper.php';
+require_once './app/controllers/user.api.controller.php';
 
 class MovieApiController extends ApiController{
     private $model;
 
     function __construct() {
         parent::__construct();
+        $this->authHelper = new AuthHelper();
         $this->model = new MovieModel();
     }
 
@@ -91,7 +94,11 @@ class MovieApiController extends ApiController{
 
 
     function create($params = []){
-
+        $user = $this->authHelper->currentUser();
+        if(!$user) {
+            $this->view->response('Unauthorized', 401);
+            return;
+        }
         $body = $this->getData();  //Obtengo la pelicula a crear (El RAW transformado a Json)
 
 
@@ -126,6 +133,11 @@ class MovieApiController extends ApiController{
 
     //Actualiza los datos de una pelicula (En el body recibe el JSON actualizado y cambia al original)
     public function update ($params = []){
+        $user = $this->authHelper->currentUser();
+        if(!$user) {
+            $this->view->response('Unauthorized', 401);
+            return;
+        }
         $id = $params[':ID'];
         $pelicula = $this->model->getMovieById($id); //Obtengo la pelicula a editar
 
@@ -169,6 +181,11 @@ class MovieApiController extends ApiController{
 
     //Borra una pelicula dada una ID
     function delete ($params = []){
+        $user = $this->authHelper->currentUser();
+        if(!$user) {
+            $this->view->response('Unauthorized', 401);
+            return;
+        }
         $id = $params[':ID'];
         $pelicula = $this->model->getMovieById($id);
 
