@@ -18,13 +18,48 @@ require_once './app/models/movie.model.php';
     function get($params = []) {
         $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
         $order = isset($_GET['order']) ? $_GET['order'] : '';
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        $value = isset($_GET['value']) ? $_GET['value'] : '';
         
         //var_dump($sort);
         //var_dump($order);
+        //var_dump($filter);
+        //var_dump($value);
+        
         
         if (empty($params)){    //Si no hay parametros, traigo todas las peliculas
-            $movies = $this->model->getAllMovies($sort,$order);
-            $this->view->response($movies, 200);
+
+               //Campos permitidos por los que se puede ordenar
+            $ordenesPermitidos = ["id_pelicula", "titulo", "sinopsis","director","año_lanzamiento","cast","plataforma_id","link_portada"];
+
+
+            //Si el campo que llega por GET no esta permitido, usa el DEFAULT, el cual es id_pelicula
+            if  (!in_array($sort, $ordenesPermitidos)){
+                $sort = "id_pelicula";
+            }
+
+            //Asegura que el orden (ASC o DESC, este siempre en mayusculas para evitar errores de tipeo)
+            $order = strtoupper($order); 
+
+
+
+            //Si el orden que llega por GET no es valido, setea ASC como default
+            if ($order !== "ASC" && $order !== "DESC") {
+                $order = "ASC"; 
+            }   
+
+
+            if (empty($filter) || empty($value)){
+                $movies = $this->model->getAllMovies($sort,$order);
+                $this->view->response($movies, 200);
+            }
+            else{
+                $movies = $this->model->getAllMoviesFilter($sort,$order,$filter,$value);
+                $this->view->response($movies, 200);
+            }
+            
+
+
         } else {
             $movie = $this->model->getMovieById($params[':ID']);  //Sino, traigo solo la pelicula cuyo ID solicitaron
             

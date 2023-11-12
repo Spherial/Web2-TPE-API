@@ -8,27 +8,10 @@ class MovieModel extends Model{
 
     public function getAllMovies($sort = "id_pelicula", $order = "ASC"){
 
-        //Campos permitidos por los que se puede filtrar
-        $ordenesPermitidos = ["id_pelicula", "titulo", "sinopsis","director","año_lanzamiento","cast","plataforma_id","link_portada"];
-
-
-        //Si el campo que llega por GET no esta permitido, usa el DEFAULT, el cual es id_pelicula
-        if (!in_array($sort, $ordenesPermitidos)){
-            $sort = "id_pelicula";
-        }
-
-        //Asegura que el orden (ASC o DESC, este siempre en mayusculas para evitar errores de tipeo)
-        $order = strtoupper($order); 
-
-
-
-        //Si el orden que llega por GET no es valido, setea ASC como default
-        if ($order !== "ASC" && $order !== "DESC") {
-            $order = "ASC"; 
-        }
+     
 
         $query = $this->db->prepare("SELECT * FROM peliculas ORDER BY $sort $order"); //Estos parametros no deja meterlos en el execute
-        $query->execute();
+        $query->execute([]);
         $movies = $query->fetchAll(PDO::FETCH_OBJ);
 
         return $movies;
@@ -36,6 +19,19 @@ class MovieModel extends Model{
     public function getLinksMovies(){
         $query = $this->db->prepare("SELECT link_portada, id_pelicula FROM peliculas");
         $query->execute();
+        $movies = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $movies;
+    }
+
+    public function getAllMoviesFilter($sort = "id_pelicula", $order = "ASC",$filter, $value){
+
+        
+
+        //Para poder usar los % del LIKE %value% usamos la funcion CONCAT, de lo contrario los parametros
+        //No se concatenan bien y SQL arroja una excepcion por error de sintaxis
+        $query = $this->db->prepare("SELECT * FROM peliculas WHERE $filter LIKE CONCAT('%', ?, '%') ORDER BY $sort $order"); 
+        $query->execute([$value]);
         $movies = $query->fetchAll(PDO::FETCH_OBJ);
 
         return $movies;
