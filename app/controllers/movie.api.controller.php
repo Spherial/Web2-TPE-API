@@ -3,7 +3,7 @@
 require_once './app/controllers/api.controller.php';
 require_once './app/models/movie.model.php';
 
- class MovieApiController extends ApiController{
+class MovieApiController extends ApiController{
     private $model;
 
     function __construct() {

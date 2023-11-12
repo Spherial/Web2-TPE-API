@@ -18,13 +18,13 @@ class MovieModel extends Model{
         }
 
         //Asegura que el orden (ASC o DESC, este siempre en mayusculas para evitar errores de tipeo)
-        $order = strtoupper($order); 
+        $order = strtoupper($order);
 
 
 
         //Si el orden que llega por GET no es valido, setea ASC como default
         if ($order !== "ASC" && $order !== "DESC") {
-            $order = "ASC"; 
+            $order = "ASC";
         }
 
         $query = $this->db->prepare("SELECT * FROM peliculas ORDER BY $sort $order"); //Estos parametros no deja meterlos en el execute
