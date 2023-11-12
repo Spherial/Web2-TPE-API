@@ -16,10 +16,14 @@ require_once './app/models/movie.model.php';
 
 
     function get($params = []) {
+        $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
+        $order = isset($_GET['order']) ? $_GET['order'] : '';
         
+        //var_dump($sort);
+        //var_dump($order);
         
         if (empty($params)){    //Si no hay parametros, traigo todas las peliculas
-            $movies = $this->model->getAllMovies();
+            $movies = $this->model->getAllMovies($sort,$order);
             $this->view->response($movies, 200);
         } else {
             $movie = $this->model->getMovieById($params[':ID']);  //Sino, traigo solo la pelicula cuyo ID solicitaron
@@ -55,6 +59,21 @@ require_once './app/models/movie.model.php';
 
                         case 'director':
                             $this->view->response($movie->director, 200);
+                            break;
+                        case 'año_lanzamiento':
+                            $this->view->response($movie->año_lanzamiento, 200);
+                            break;
+
+                        case 'cast':
+                            $this->view->response($movie->cast, 200);
+                            break;
+
+                         case 'plataforma_id':
+                            $this->view->response($movie->plataforma_id, 200);
+                            break;
+
+                         case 'link_portada':
+                            $this->view->response($movie->link_portada, 200);
                             break;
                             
                         default:
